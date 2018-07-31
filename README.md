@@ -1,0 +1,2 @@
+# qingmvc
+A SIMPLE MVC&amp;OOP PHP FRAMEWORK 轻量级MVC&amp;OOP PHP框架
