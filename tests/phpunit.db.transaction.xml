@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phpunit bootstrap="./autoload.php"
+		colors="true"
+		stopOnFailure="true"
+		>
+		<testsuites>
+			<testsuite>
+				<directory suffix="Test.php">./db/transaction</directory>
+				<exclude>./db/transaction/~bak</exclude>
+			</testsuite>
+		</testsuites>
+		<php>
+			<var name="QTESTS_TABLE" value="pre_tests" />
+		</php>
+</phpunit>

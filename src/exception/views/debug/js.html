@@ -1,0 +1,44 @@
+<script type="text/javascript">
+var Trace={};
+//切换trace
+Trace.traceLine=function(tnum,dom){
+	//隐藏全部
+	var doms=document.getElementsByClassName('trace-item item');
+	for(var i=0;i<doms.length;i++){
+		doms[i].classList.remove('curr');
+	}
+	//显示选中
+	dom.classList.add('curr');
+	this.codeLine(tnum);
+};
+//切换code
+Trace.codeLine=function(tnum){
+	//隐藏全部
+	var doms=document.getElementsByClassName('exception-position');
+	for(var i=0;i<doms.length;i++){
+		doms[i].style.display='none';
+	}
+	//显示选中
+	var domName='J-code-'+tnum;
+	var dom=document.getElementById(domName);
+	dom.style.display='block';
+};
+//
+var Buffers={};
+Buffers.toggle=function(){	
+	var d=document.getElementById('buffers');
+	//prompt('输出缓存',d.innerHTML);
+	if(d.style.display=='none'){
+		d.style.display='block';
+	}else{
+		d.style.display='none';
+	}
+	var buf='空';
+	var d2=document.getElementById('J-buffers');
+	if(d2){
+		buf=d2.innerHTML;
+	}
+	document.getElementById('buffers-box').innerHTML=buf;
+};
+
+</script>

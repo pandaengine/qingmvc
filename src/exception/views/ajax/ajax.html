@@ -1,0 +1,41 @@
+
+#异常信息   <?php echo "{$class}({$errorCode}) ";?>
+
+
+<?php echo "错误信息：{$message} \n"; ?>
+
+#抛出位置
+<?php 
+$position=current($trace);
+?>
+<?php echo $position['file'];?> | line(<?php echo $position['line'];?>)
+<?php 
+ foreach ((array)$position['code'] as $num=>$row){
+	$curr=($num==$position['line'])?'##':'';
+ 	echo "$curr{$num}: {$row}";
+ }
+?>
+
+#TRACE 追踪信息
+  
+<?php
+foreach ($trace as $num=>$row){
+	echo "{$num}: {$row['filename']}(line {$row['line']}) | {$row['class']}{$row['type']}{$row['function']} {$row['argsString']} \n";
+}
+?>
+
+#服务器信息   | 用户请求数据 
+<?php
+foreach ($envData as $title=>$data){
+	echo "\n\n##{$title}\n";
+	if(!empty($data)){
+		foreach ($data as $k=>$value){
+			echo "$k: ";
+			echo print_r($value,true);
+			echo "\n";
+		}
+	}else{
+		echo 'empty';
+	}
+}
+?>

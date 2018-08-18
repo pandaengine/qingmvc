@@ -1,0 +1,335 @@
+<style type="text/css">
+body {
+	font-family: 'Microsoft Yahei', Verdana, arial, sans-serif;
+	font-size: 14px;
+	color: #666;
+	background: #FFF;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	text-decoration: none;
+	color: #174B73;
+}
+
+a:hover {
+	text-decoration: none;
+	color: #FF6600;
+}
+
+h1,h2,h3 {
+	font-size: 100%;
+}
+
+ol,ul {
+	list-style: none;
+}
+
+b.b {
+	font-weight: bold;
+	color: #4288CE;
+}
+
+.exception-wrapper {
+	height: 100%;
+	width: 100%;
+	position: fixed;
+	margin: 0;
+	padding: 0;
+	left: 0;
+	top: 0;
+	background: #FFF;
+	z-index: 99;
+}
+
+.exception-wrapper .l {
+	height: 100%;
+	overflow: auto;
+	float: left;
+	width: 30%;
+	background: #F3F3F3;
+}
+
+.exception-wrapper .r {
+	height: 100%;
+	overflow: auto;
+	float: right;
+	width: 70%;
+	background: #DADADA;
+}
+
+.exception-trace h2 {
+	padding: 10px;
+	border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.exception-trace .item {
+	padding: 10px 10px;
+	border-right: 1px solid rgba(0, 0, 0, 0.2);
+	border-bottom: 1px solid rgba(0, 0, 0, .05);
+	cursor: pointer;
+	font-size: 14px;
+}
+
+.exception-trace .item:hover {
+	background: rgba(190, 233, 234, 0.63);
+}
+
+.exception-trace .item.curr,.exception-trace .item.curr:HOVER {
+	/*
+	background:#4288CE;
+	color: #FFF;
+	color: #2ea2cc;
+	*/
+	/* background-color: #000; */
+	background-image: linear-gradient(to right, #68A9DC 6px, rgba(255, 255, 255, 0));
+}
+
+.exception-trace .item.curr .item-class {
+	/*color: #FFF;*/
+	
+}
+
+.exception-trace .item-method {
+	
+}
+
+.exception-trace .item-index {
+	font-size: 11px;
+	color: #BDBDBD;
+}
+
+.exception-trace .item-class {
+	color: #4288CE;
+}
+
+.exception-trace .item-args {
+	font-family: consolas, monospace;
+	word-wrap: break-word;
+	display: none;
+	color: #F06000;
+}
+
+.exception-trace .item-class,.exception-trace .item-function,.exception-trace .item-type,.exception-trace .item-index {
+	font-weight: bold;
+}
+
+.exception-trace .item-file {
+	font-family: consolas, monospace;
+	word-wrap: break-word;
+	padding-top: 10px;
+}
+
+.exception-trace .item-line:before {
+	/*content: ":";*/
+	
+}
+
+.exception-trace .item-line {
+	font-weight: bold;
+	color: #4288CE;
+}
+
+.exception-info {
+	/*
+	color: #FFF;
+	background: #FFD4D4;
+	border-left: 5px solid #CD3F3F;
+	*/
+	color: #FFF;
+    background: #FDBBD1;
+    border-left: 5px solid #E91E63;
+}
+
+.exception-info .info {
+	padding-top: 10px;
+	padding-left: 10px;
+	color: #616161;
+}
+
+.exception-info .info .class {
+	color: #CD3F3F;
+}
+
+.exception-info .message {
+	padding: 20px 20px;
+	font-size: 32px;
+	word-wrap: break-word;
+	color: #666;
+}
+
+/*---.exception-position---*/
+
+.exception-position {
+	padding: 10px;
+	background: #C3D2E2;
+	border-left: 5px solid #4288CE;
+}
+
+.exception-position .throw,.exception-position .args {
+	line-height: 24px;
+	padding: 0;
+}
+
+.exception-position .throw .file {
+	
+}
+
+.exception-position .throw .line {
+	
+}
+
+.exception-position .code {
+	font-family: Consolas, 'Source Code Pro', Monaco, "Lucida Console", monospace;
+	/*
+	background: #206DBA;
+	*/
+	color: rgba(255, 255, 255, 0.9);
+	line-height: 24px;
+	padding: 20px 0;
+	margin: 4px 0;
+	background-image: linear-gradient(to right, #206DBA 10px, rgba(195, 210, 226, 0.57));
+}
+
+.exception-position .code ul li{
+    padding: 0 10px;
+}
+.exception-position .code .num {
+	opacity: 0.5;
+	margin-right: 10px;
+}
+
+.exception-position .code .curr {
+	color: #F00;
+	background: rgba(255, 255, 0, 0.94);
+	font-weight: bold;
+}
+
+
+.exception-data {
+	padding: 10px;
+	padding-left: 5px;
+	border-left: 5px solid rgba(0, 0, 0, 0.1);
+}
+
+.exception-data .title {
+	font-size: 16px;
+	font-weight: bold;
+	color: #4288CE;
+	margin: 10px 0;
+	padding: 10px 0;
+	display: block;
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+	border-bottom: 1px dotted rgba(0, 0, 0, 0.2);
+}
+
+.exception-data .data-table {
+	width: 100%;
+	margin: 10px 0;
+}
+
+.exception-data .data-table table {
+	font: 13px consolas, monospace;
+}
+
+.data-table td:first-child {
+	width: 20%;
+	min-width: 130px;
+	overflow: hidden;
+	font-weight: bold;
+	color: #463C54;
+	padding-right: 5px;
+}
+
+.data-table td:last-child {
+	width: 80%;
+	-ms-word-break: break-all;
+	word-break: break-all;
+	word-break: break-word;
+	-webkit-hyphens: auto;
+	-moz-hyphens: auto;
+	hyphens: auto;
+}
+
+.data-table .empty {
+	color: rgba(0, 0, 0, 0.3);
+	font-style: italic;
+}
+
+.qingmvc {
+	font-weight: bold;
+	text-align: center;
+	color: #F30;
+	font-family: Consolas, monospace, 'Source Code Pro', Monaco, "Lucida Console";
+}
+
+.qingmvc .introduce {
+	color: #999;
+}
+
+.buffers{
+	/*display:none;*/
+	z-index:9999;
+	
+	position: fixed;
+    top: 10px;
+    left: 30%;
+	width: 60%;
+	max-height: 80%;
+    background: #fffbd8;
+	
+	border: 10px solid #FF9800;
+	
+	overflow: auto;
+	overflow-y: scroll;
+}
+.buffers h3{
+	padding-left: 10px;	
+}
+.buffers .close{
+    float: right;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+}
+#buffers-box{
+	padding: 20px 10px;
+}
+/**
+滚动条组成
+
+::-webkit-scrollbar 滚动条整体部分
+::-webkit-scrollbar-thumb  滚动条里面的小方块，能向上向下移动（或往左往右移动，取决于是垂直滚动条还是水平滚动条）
+::-webkit-scrollbar-track  滚动条的轨道（里面装有Thumb）
+::-webkit-scrollbar-button 滚动条的轨道的两端按钮，允许通过点击微调小方块的位置。
+::-webkit-scrollbar-track-piece 内层轨道，滚动条中间部分（除去）
+::-webkit-scrollbar-corner 边角，即两个滚动条的交汇处
+::-webkit-resizer 两个滚动条的交汇处上用于通过拖动调整元素大小的小控件
+*/
+
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+::-webkit-scrollbar
+{
+    width: 12px;
+	height: 12px;
+}
+ 
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track
+{
+    border-radius: 0;
+    background-color: #eee;
+}
+ 
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb
+{
+    border-radius: 0;
+    background-color: #999;
+}
+</style>

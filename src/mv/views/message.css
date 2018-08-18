@@ -1,0 +1,50 @@
+body {
+	font-family: Arial,SimSun,"宋体",Heiti,"黑体",sans-serif;
+	background: #fafafa;
+	color: #333;
+}
+*{
+	margin: 0;
+    padding: 0;
+}
+a {
+	color: #21759B;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #D54E21;
+}
+
+.page-message {
+    text-align: center;
+}
+
+.page-message .title {
+	font-size: 30px;
+	padding: 20px 0;
+	text-align: center;
+	
+	color: #a94442;
+	background-color: rgba(233, 30, 99, 0.19);
+    border-bottom: 1px solid rgba(233, 30, 99, 0.19);
+}
+.page-success .title{
+	color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.page-message .jump {
+	text-align: center;
+	padding: 4px 0;
+}
+
+.page-message .jump a {
+	color: #aaa;
+    font-size: 13px;
+}
+
+.page-message .jump a:HOVER {
+	text-decoration: underline;
+}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title><?php echo $message; ?> - QingMVC.PHP { QING IS NOT SIMPLE }</title>
+<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+<?php include __DIR__.DS.'js.html'; ?>
+<?php include __DIR__.DS.'css.html'; ?>
+</head>
+<body>
+<div class="page-exception">
+	<div class="buffers" style='display:none;' id="buffers">
+		<h3>输出缓存  <a class="close" href="javascript:;" onclick="Buffers.toggle();" title="关闭" >X</a></h3>
+		<pre id="buffers-box"></pre>
+	</div>
+	<div class="exception-wrapper">
+		<!-- TRACE 追踪信息  -->
+		<div class="exception-trace l">
+			<h2><b class="b">[ TRACE 追溯信息    ]</b><a href="javascript:;" style="float: right;" onclick="Buffers.toggle();" title="打开或关闭输出缓存">输出缓存</a></h2>
+			<?php
+			foreach ($trace as $num=>$row){
+			?>
+			<div class="trace-item item <?php if($num==count($trace)-1){echo 'curr';} ?>" id='J-item-<?php echo $num;?>' onclick="Trace.traceLine(<?php echo (int)$num;?>,this);" >
+			    <div class="item-method">
+			    	<span class="item-index"><?php echo $num;?>.</span>
+			        <span class="item-class"><?php echo @$row['class'];?></span>
+			        <span class="item-type"><?php echo @$row['type'];?></span>
+			        <span class="item-function"><?php echo @$row['function'];?></span>
+			        <span class="item-args"><?php echo @$row['argsString'];?></span>
+			    </div>
+			    <div class="item-file">
+			    	<?php echo $row['filename'];?>
+			    	<span class="item-line">line(<?php echo @$row['line'];?>)</span>
+			    </div>
+		    </div>
+		    <?php } ?>
+		</div>
+		<div class="exception-main r">
+			<!-- 异常信息 -->
+			<div class="exception-info">
+				<div class="info">
+					<b class="b">[ 异常信息   ]</b>
+					<span class="class" title="异常类"><?php echo $class;?></span>
+					<span class='code'  title="异常错误代号">(<?php echo $errorCode;?>)</span>
+				</div>
+				<div class='message'>
+					 <?php echo $message; ?>
+				</div>
+			</div>
+			<!-- 抛出位置代码 -->
+			<?php foreach ($trace as $tnum=>$trow){ ?>
+			<div class="exception-position" id='J-code-<?php echo $tnum;?>' style='<?php if($tnum!=count($trace)-1){echo 'display:none;';} ?>'>
+				 <div class='throw'>
+				 	<b class="b">[ 当前位置   ]</b>
+				 	<span class="file"><?php echo @$trow['file'] ;?></span>
+				 	<span class="line">line(<?php echo @$trow['line'];?>)</span>
+				 </div>
+				 <div class='args'>
+				 	<b class="b">[ 传递参数   ]</b>
+				 	<span class=""><?php echo @$trow['action'].@$trow['argsString'] ;?></span>
+				 </div>
+				 <div class='code'>
+					 <ul>
+					 <?php
+					 foreach ((array)$trow['code'] as $cnum=>$crow){
+						$crow=htmlentities($crow);
+						$curr=($cnum==$trow['line'])?' class="curr" ':'';
+					 	echo "<li {$curr}><span class='num'>{$cnum}:</span>{$crow}</li>";
+					 }
+					 ?>
+					 </ul>
+				 </div>
+			</div>
+			<?php } ?>
+			 
+			<!-- 服务器信息 -->
+			<div class="exception-data">
+				<?php require __DIR__.'/env.html';?>
+			</div>
+			<!-- 框架信息 -->
+			<div class='qingmvc'> QingMVC.PHP<span class='introduce'> { A SIMPLE MVC&OOP PHP FRAMEWORK }</span></div>
+			<div style="height:40px;">&nbsp;</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

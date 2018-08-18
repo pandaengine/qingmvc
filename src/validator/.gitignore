@@ -1,0 +1,15 @@
+.git
+!.gitignore
+!.htaccess
+~*
+*-off
+
+deployment.properties
+*.properties
+
+.buildpath
+.project
+.settings
+
+composer.lock
+*.lock

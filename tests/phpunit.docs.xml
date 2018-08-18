@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- phpunit -c phpunit.xml -->
+<!-- 启动脚本：--bootstrap ./autoload.php -->
+<phpunit bootstrap="./autoload.php"
+			colors="true"
+			stopOnFailure="false>
+		<testsuites>
+			<testsuite name="QingMVC Test Suite">
+				<!-- 包含目录和文件后缀 -->
+				<directory suffix="Test.php">./</directory>
+				<!-- 排除db目录 -->
+				<exclude>./db/</exclude>
+				
+			</testsuite>
+		</testsuites>
+		<php>
+			<var name="QTESTS_TABLE" value="pre_tests" />
+		</php>
+</phpunit>

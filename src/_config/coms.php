@@ -1,0 +1,118 @@
+<?php 
+/**
+ * 框架核心组件配置
+ * 
+ * @author xiaowang <736523132@qq.com>
+ * @copyright Copyright (c) 2013 http://qingmvc.com
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache-2.0
+ */
+return 
+[
+		//简单的配置信息
+		'config'=>
+		[
+			'class'=>'\qing\config\Config'
+		],
+		//数据库主连接
+		'db@main'=>
+		[
+			//数据库驱动
+			'class'=>'\qing\db\pdo\Connection',
+			//数据库类型
+			'type'  =>'mysql',
+		],
+		//缓存主连接
+		'cache@main'=>
+		[
+			'class'=>'\qing\cache\file\FileCache'
+		],
+		//缓存连接@数据库缓存
+		'cache@queryCache'=>
+		[
+			'class'=>'\qing\cache\file\FileCache'
+		],
+		//sql语法构建器
+		'sqlb@main'=>
+		[
+			'class' =>'\qing\db\SqlBuilder',
+			'type'	=>'mysql',
+			'bindOn'=>true
+		],
+		//控制器适配器
+		'adapter'=>
+		[
+			//'class'=>'\qing\adapter\ControllerAdapter',
+			//'class'=>'\qing\adapter\ClosureAdapter',
+			'class'=>'\qing\adapter\ApiAdapter',
+			//'class'=>'\qing\adapter\DIAdapter',
+		],
+		//路由器
+		'router'=>
+		[
+			//'class'=>'\qing\router\Router',
+			'creator'=>'\qing\router\RouterCreator'
+		],
+		//路由表处理器
+		/*
+		'routes'=>
+		[
+			'class'=>'\qing\routes\Routes'
+		],
+		*/
+		//URL管理器
+		'urlManager'=>
+		[
+			'creator'=>'\qing\url\UrlManagerCreator'
+		],
+		//用户请求组件
+		'request'=>
+		[
+			'class'=>'\qing\http\Request'
+		],
+		//视图组件
+		'view'=>
+		[
+			'class'=>'\qing\view\View'
+		],
+		//小部件管理器
+		'widget'=>
+		[
+			'class'=>'\qing\widget\WidgetManager'
+		],
+		//国际化语言
+		'lang'=>
+		[
+			'class'=>'\qing\lang\Lang'
+		],
+		//会话组件	
+		'session'=>
+		[
+			'class'=>'\qing\session\Session'
+		],
+		//用户会话组件
+		'user'=>
+		[
+			'class'=>'\qing\session\User'
+		],
+		//事件管理器
+		'event'=>
+		[
+			'class'=>'\qing\event\EventManager'
+		],
+		//容器管理器
+		'container'=>
+		[
+			'class'=>'\qing\container\Container'
+		],
+		//异常处理器
+		'exception'=>
+		[
+			'class'=>'\qing\exception\ExceptionHandler'
+		],
+		//日志组件
+		'logger'=>
+		[
+			'class'=>'\qing\log\FileLogger'
+		]
+];
+?>

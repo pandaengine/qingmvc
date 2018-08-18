@@ -1,0 +1,45 @@
+<?php
+$success =(bool)$success;
+$autojump=(int)@$autojump;
+$redirect=(string)@$redirect;
+$class   =$success?'success':'error';
+$title	 =$success?'操作成功':'操作失败';
+$jump_msg=$autojump?'正在自动跳转...':'点击手动跳转...';
+$jump_url=empty($redirect)?'javascript:error_jump();':$redirect;
+?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><?php echo L()->msg_title.$message;?></title>
+<style type="text/css">
+<?php echo @file_get_contents(__DIR__.DS.'message.css');?>
+</style>
+</head>
+<body>
+<div  class="page-message page-<?php echo $class;?>" >
+	<h1 class="title">
+		<!-- <strong><?php echo $title;?></strong>：-->
+		<?php echo $message;?>
+	</h1>
+	<div class="jump"><a href="<?php echo $jump_url;?>" ><?php echo $jump_msg;?></a></div>
+</div>
+<script type="text/javascript">
+	var autojump=<?php echo (int)$autojump;?>;
+	var errorUrl="<?php echo $redirect;?>";
+	//#错误跳转
+	function error_jump(){
+		if(errorUrl>''){
+			window.location.href=errorUrl;
+		}else{
+			//#返回上一页
+			history.back();
+		}
+	}
+	//#错误跳转
+	if(autojump){
+		setTimeout('error_jump();',1200);
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+OutputResponse
+
+该文件夹下均为Response，可以省略文件后缀

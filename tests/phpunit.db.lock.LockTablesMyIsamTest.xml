@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phpunit bootstrap="./autoload.php" filter="/::testRead"
+		colors="true"
+		stopOnFailure="true"
+		>
+		<testsuites>
+			<testsuite name="Db Test Suite" filter="/::testRead">
+				<file filter="/::testRead">./db/lock/LockTablesMyIsamTest.php</file>
+			</testsuite>
+			<testsuite name="Db Test Suite2" filter="/::testRead">
+				<file filter="/::testRead">./db/lock/LockTablesMyIsamTest.php</file>
+			</testsuite>
+		</testsuites>
+		<php>
+			<var name="QTESTS_TABLE" value="pre_tests" />
+		</php>
+</phpunit>

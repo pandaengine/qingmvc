@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phpunit bootstrap="./autoload.php"
+		colors="true"
+		stopOnFailure="true"
+		>
+		<testsuites>
+			<testsuite name="QingMVC Test Suite">
+				<directory suffix="Test.php">./</directory>
+				<exclude>./db/~bak</exclude>
+				<exclude>./db/lock</exclude>
+				<exclude>./db/transaction</exclude>
+				<exclude>./views/smarty</exclude>
+				<exclude>./_app</exclude>
+				<exclude>./~bak</exclude>
+				<exclude>./~bak2</exclude>
+			</testsuite>
+		</testsuites>
+		<php>
+			<var name="QTESTS_TABLE" value="pre_tests" />
+		</php>
+</phpunit>

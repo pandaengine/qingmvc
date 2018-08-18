@@ -1,0 +1,26 @@
+{
+    "name": "qingmvc/qtests",
+    "description": " QingMVC Test Suite QingMVC测试套件 ",
+    "keywords": ["qingmvc","framework","qingcms","mvc","tests","phpunit"],
+    "homepage": "http://www.qingmvc.com",
+	"license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "xiaowang",
+            "homepage": "http://www.qingmvc.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0",
+		"qingmvc/qingmvc":"dev-master"
+    },
+	"require-dev": {
+        "phpunit/phpunit": "~5",
+    },
+    "autoload": {
+        "psr-4": {
+            "qtests\\": "./"
+        }
+    }
+}
