@@ -3,7 +3,7 @@ namespace qing\facades;
 exit('do not use it! only for tip! '.__FILE__);
 /**
  *
- * @see \qing\session_user\UserSession
+ * @see \qing\session\User
  */
 class User extends Facade{
 	/**
@@ -25,98 +25,86 @@ class User extends Facade{
 	/**
 	 * 
 	 */
-	static public function setup(){
-		static::getInstance()->setup();
+	public static function get($key,$def=''){
+		return static::getInstance()->get($key,$def);
 	}
 	/**
 	 * 
 	 */
-	static public function getKey($key){
-		static::getInstance()->getKey($key);
+	public static function set($key,$value){
+		return static::getInstance()->set($key,$value);
 	}
 	/**
 	 * 
 	 */
-	static public function get($key,$def=''){
-		static::getInstance()->get($key,$def);
+	public static function setAdmin($admin){
+		return static::getInstance()->setAdmin($admin);
 	}
 	/**
 	 * 
 	 */
-	static public function set($key,$value){
-		static::getInstance()->set($key,$value);
+	public static function isAdmin(){
+		return static::getInstance()->isAdmin();
 	}
 	/**
 	 * 
 	 */
-	static public function setAdmin($admin){
-		static::getInstance()->setAdmin($admin);
+	public static function isAdminLogged(){
+		return static::getInstance()->isAdminLogged();
 	}
 	/**
 	 * 
 	 */
-	static public function isAdmin(){
-		static::getInstance()->isAdmin();
+	public static function isLogged(){
+		return static::getInstance()->isLogged();
 	}
 	/**
 	 * 
 	 */
-	static public function isAdminLogged(){
-		static::getInstance()->isAdminLogged();
+	public static function isLoggedAndActive(){
+		return static::getInstance()->isLoggedAndActive();
 	}
 	/**
 	 * 
 	 */
-	static public function isLogged(){
-		static::getInstance()->isLogged();
+	public static function isActive(){
+		return static::getInstance()->isActive();
 	}
 	/**
 	 * 
 	 */
-	static public function isLoggedAndActive(){
-		static::getInstance()->isLoggedAndActive();
+	public static function gid($gid){
+		return static::getInstance()->gid($gid);
 	}
 	/**
 	 * 
 	 */
-	static public function isActive(){
-		static::getInstance()->isActive();
+	public static function nickname($nickname){
+		return static::getInstance()->nickname($nickname);
 	}
 	/**
 	 * 
 	 */
-	static public function gid($gid){
-		static::getInstance()->gid($gid);
+	public static function status($status){
+		return static::getInstance()->status($status);
 	}
 	/**
 	 * 
 	 */
-	static public function nickname($nickname){
-		static::getInstance()->nickname($nickname);
+	public static function login($uid,$username,$admin=0){
+		return static::getInstance()->login($uid,$username,$admin);
 	}
 	/**
 	 * 
 	 */
-	static public function status($status){
-		static::getInstance()->status($status);
+	public static function logout(){
+		return static::getInstance()->logout();
 	}
 	/**
 	 * 
 	 */
-	static public function login($uid,$username,$admin=0){
-		static::getInstance()->login($uid,$username,$admin);
-	}
-	/**
-	 * 
-	 */
-	static public function logout(){
-		static::getInstance()->logout();
-	}
-	/**
-	 * 
-	 */
-	static public function getData(){
-		static::getInstance()->getData();
+	public static function getData(){
+		return static::getInstance()->getData();
 	}
 }
 ?>

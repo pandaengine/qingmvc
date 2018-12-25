@@ -8,15 +8,21 @@
  * @copyright Copyright (c) 2013 http://qingmvc.com
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache-2.0
  */
+$_INSERT='INSERT INTO %TABLE% %KEYS% VALUES %VALUES%';
+$_REPLACE='REPLACE INTO %TABLE% %KEYS% VALUES %VALUES%';
 return [
 	//#查询数据
 	'SELECT'		=>'SELECT %FIELDS% FROM %TABLE% %WHERE% %GROUPBY% %HAVING% %ORDERBY% %LIMIT% %LOCK%',
 	//#统计操作
 	//'COUNT'		=>'SELECT COUNT(*) AS COUNT FROM %TABLE% %WHERE%',
 	//#插入数据
-	'INSERT'		=>'INSERT INTO %TABLE% %KEYS% VALUES %VALUES%',
+	//'INSERT'		=>'INSERT INTO %TABLE% %KEYS% VALUES %VALUES%',
 	//#替换数据
-	'REPLACE'		=>'REPLACE INTO %TABLE% %KEYS% VALUES %VALUES%',
+	//'REPLACE'		=>'REPLACE INTO %TABLE% %KEYS% VALUES %VALUES%',
+	'INSERT'		=>$_INSERT,
+	'INSERTS'		=>$_INSERT,
+	'REPLACE'		=>$_REPLACE,
+	'REPLACES'		=>$_REPLACE,
 	//#插入数据，唯一冲突则更新某些字段
 	'INSERT_UPDATE'	=>'INSERT INTO %TABLE% %KEYS% VALUES %VALUES% ON DUPLICATE KEY UPDATE %UPDATES%',
 	//#删除操作

@@ -25,6 +25,12 @@ class Session extends Component{
 	 */
 	public $cookie_httponly=true;
 	/**
+	 * .qingmvc.com
+	 * 
+	 * @var string
+	 */
+	public $cookie_domain;
+	/**
 	 * 会话生命周期
 	 * 
 	 * - 会话文件回收周期，受gc启动概率影响，不精确
@@ -63,6 +69,10 @@ class Session extends Component{
 		}
 		//开启httponly，防范xss，避免sessionid泄漏
 		$this->cookie_httponly($this->cookie_httponly);
+		//域名作用域
+		if($this->cookie_domain!==null){
+			$this->cookie_domain($this->cookie_domain);
+		}
 		//
 		if($this->lifetime!==null){
 			$this->lifetime($this->lifetime);

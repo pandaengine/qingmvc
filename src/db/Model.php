@@ -110,6 +110,28 @@ class Model extends BaseModel{
 		return $this->realTableName;
 	}
 	/**
+	 * - 永久性的表名
+	 * - 在实例生命周期内一直存在
+	 * 
+	 * @param string $table
+	 * @return $this
+	 */
+	public function tableName($table){
+		$this->tableName=$table;
+		return $this;
+	}
+	/**
+	 * - 永久性的表名
+	 * - 在实例生命周期内一直存在
+	 *
+	 * @param string $table
+	 * @return $this
+	 */
+	public function realTableName($table){
+		$this->realTableName=$table;
+		return $this;
+	}
+	/**
 	 * 取得语法器
 	 *
 	 * @return SqlBuilder
@@ -141,12 +163,24 @@ class Model extends BaseModel{
 		return [$sql,$binds];
 	}
 	/**
-	 * 一次性的表名
+	 * - 一次性的表名
+	 * - 只在当前查询有效
 	 *
-	 * @param string $table 完整的表名
+	 * @param string $table 表名，不包含前缀
 	 * @return $this
 	 */
 	public function table($table){
+		$this->_parts[SqlBuilderInterface::TABLE]=$this->getPrefix().$table;
+		return $this;
+	}
+	/**
+	 * - 一次性的表名
+	 * - 只在当前查询有效
+	 *
+	 * @param string $table 完整的表名，包含前缀
+	 * @return $this
+	 */
+	public function realtable($table){
 		$this->_parts[SqlBuilderInterface::TABLE]=$table;
 		return $this;
 	}
@@ -299,10 +333,19 @@ class Model extends BaseModel{
 		return $this->insert($data,SqlBuilderInterface::REPLACE);
 	}
 	/**
+	 * 替换多行数据
+	 *
+	 * @param array $data
+	 * @return boolean/number
+	 */
+	public function replaces(array $data){
+		return $this->inserts($data,SqlBuilderInterface::REPLACES);
+	}
+	/**
 	 * 插入数据
 	 *
 	 * @param $data 数据
-	 * @param $type insert/replace
+	 * @param $action insert/replace
 	 * @return boolean/number
 	 */
 	public function insert(array $data,$action=SqlBuilderInterface::INSERT){
@@ -328,6 +371,27 @@ class Model extends BaseModel{
 				return true;
 			}
 		}
+	}
+	/**
+	 * 插入多行数据
+	 *
+	 * @param array $datas 多行数据
+	 * @param string $action inserts/replaces
+	 * @return boolean/number
+	 */
+	public function inserts(array $datas,$action=SqlBuilderInterface::INSERTS){
+		//#插入数据为空
+		if(!$datas){
+			throw new exceptions\ModelException('insert : data数据不能为空');
+		}
+		//
+		$this->_parts[SqlBuilderInterface::KEYS]  =array_keys($datas[0]);
+		$this->_parts[SqlBuilderInterface::VALUES]=$datas;
+		//
+		$sql=$this->buildSql($action);
+		$res=$this->execute($sql[0],$sql[1]);
+		//getInsertId：只是第一行的id
+		return (bool)$res;
 	}
 	/**
 	 * - 有重复异常则更新某些字段;否则插入

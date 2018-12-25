@@ -23,7 +23,7 @@ class U{
 	 * @param array  $params
 	 * @return string
 	 */
-	static public function url($module,$ctrl='',$action='',array $params=[]){
+	static public function url_OFF($module,$ctrl='',$action='',array $params=[]){
 		if(!$module){
 			if($module!==null && MODULE_NAME!=MAIN_MODULE){
 				//自动获取

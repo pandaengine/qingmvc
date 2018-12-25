@@ -75,7 +75,7 @@ class AppConfig{
 				}
 			}elseif($hosts instanceof \Closure){
 				//#闭包函数|返回true则匹配成功
-				if(call_user_func($hosts,$host)){
+				if(call_user_func($hosts)){
 					return $env;
 				}
 			}else{

@@ -6,6 +6,7 @@ use qing\facades\Router;
 use qing\exceptions\http\NotFoundHttpException;
 use qing\view\V;
 use qing\mv\ModelAndView;
+use qing\router\RouteBag;
 /**
  * Web应用,处理http请求
  * 
@@ -142,7 +143,7 @@ class WebApp extends App{
 	 * @param \qing\router\RouteBag $routeBag
 	 * @return \qing\mvc\ModelAndView
 	 */
-	public function runModuleAndController(\qing\router\RouteBag $routeBag){
+	public function runModuleAndController(RouteBag $routeBag){
 		/*@var $self \qing\app\WebApp */
 		$self=$this;
 		//#主模块或副模块

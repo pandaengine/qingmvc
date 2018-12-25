@@ -19,7 +19,7 @@ class MV extends Message{
 	 * @param array $params
 	 * @return \qing\mv\ModelAndView
 	 */
-	static public function show(array $params){
+	public static function show(array $params){
 		//#使用当前模块的消息提示视图
 		$res=mod(AUTO_MODULE)->getMessage($params);
 		if($res===false){
@@ -36,7 +36,7 @@ class MV extends Message{
 	 * @param array  $vars      模版变量
 	 * @return \qing\mv\ModelAndView
 	 */
-	static public function create($viewName='',array $vars=[]){
+	public static function create($viewName='',array $vars=[]){
 		return new ModelAndView($viewName,$vars);
 	}
 	/**
@@ -50,7 +50,7 @@ class MV extends Message{
 	 * @param string  $redirect   重定向位置
 	 * @param integer $statusCode http状态码|默认为302临时重定向
 	 */
-	static public function redirect($redirect,$statusCode=302){
+	public static function redirect($redirect,$statusCode=302){
 		return new Redirect($redirect,$statusCode);
 	}
 	/**
@@ -59,7 +59,7 @@ class MV extends Message{
 	 * @param string  $redirect   重定向位置
 	 * @param integer $statusCode http状态码|默认为302临时重定向
 	 */
-	static public function jump($redirect,$statusCode=302){
+	public static function jump($redirect,$statusCode=302){
 		(new Redirect($redirect,$statusCode))->send();
 		return MV_NULL;
 	}
@@ -68,7 +68,7 @@ class MV extends Message{
 	 *
 	 * @param integer $statusCode http状态码|默认为302临时重定向
 	 */
-	static public function back($statusCode=302){
+	public static function back($statusCode=302){
 		return new Redirect('',$statusCode);
 	}
 	/**
@@ -78,7 +78,7 @@ class MV extends Message{
 	 * @name refresh
 	 * @see \qing\response\Refresh
 	 */
-	static public function refresh($exit=false){
+	public static function refresh($exit=false){
 		//内容
 		$content=
 		'<!DOCTYPE html>

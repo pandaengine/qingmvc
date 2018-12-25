@@ -8,5 +8,8 @@ app-module-event-component-service
 - ApplicationContext | WebApplicationContext
 
 - 应用主线包括
-- 前端控制器|路由调度器类似
-- Front Controller
+
+
+php -f cli.php "m=main&c=index&a=index"
+
+php -f cli.php "111" "222"

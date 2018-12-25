@@ -32,13 +32,19 @@ class Message{
 	 */
 	const autojump='autojump';
 	/**
+	 * 刷新
+	 *
+	 * @var string
+	 */
+	const reload='reload';
+	/**
 	 * 操作成功消息
 	 *
 	 * @param string $message
 	 * @param array $params
 	 * @return \qing\response\Json
 	 */
-	static public function success($message='',array $params=[]){
+	public static function success($message='',array $params=[]){
 		return static::message(1, $message, $params);
 	}
 	/**
@@ -48,7 +54,7 @@ class Message{
 	 * @param array $params
 	 * @return \qing\response\Json
 	 */
-	static public function error($message='',array $params=[]){
+	public static function error($message='',array $params=[]){
 		return static::message(0, $message, $params);
 	}
 	/**
@@ -57,7 +63,7 @@ class Message{
 	 * @param string $params  附件参数
 	 * @return
 	 */
-	static public function message($success,$message='',array $params=[]){
+	public static function message($success,$message='',array $params=[]){
 		if(!$message){
 			$message=$success?L()->msg_success:L()->msg_error;
 		}
@@ -77,9 +83,15 @@ class Message{
 	/**
 	 * @param array $datas
 	 */
-	static public function show(array $datas){
+	public static function show(array $datas){
 		dump(__METHOD__);
 		dump($datas);
+	}
+	/**
+	 * @param array $datas
+	 */
+	public static function fromBag(MessageBag $bag){
+		return self::message($bag->success,$bag->message,$bag->params);
 	}
 }
 ?>

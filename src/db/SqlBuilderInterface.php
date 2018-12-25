@@ -22,8 +22,10 @@ interface SqlBuilderInterface{
 	const COUNT		= 'COUNT';
 	//
 	const SELECT    = 'SELECT';
-	const REPLACE   = 'REPLACE';
 	const INSERT    = 'INSERT';
+	const INSERTS   = 'INSERTS';
+	const REPLACE   = 'REPLACE';
+	const REPLACES  = 'REPLACES';
 	const UPDATE 	= 'UPDATE';
 	const INSERT_UPDATE = 'INSERT_UPDATE';
 	const DELETE	= 'DELETE';

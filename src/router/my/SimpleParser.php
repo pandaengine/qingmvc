@@ -25,7 +25,7 @@ class SimpleParser extends Parser{
 	/**
 	 * @see \qing\router\parser::match()
 	 */
-	public function match(){
+	public function parse(){
 		//#pathinfo段
 		//$pathinfo=Request::getPathInfo();
 		$pathinfo=(string)@$_SERVER['PATH_INFO'];

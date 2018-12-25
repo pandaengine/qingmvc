@@ -2,7 +2,7 @@
 namespace qing\facades;
 /**
  *
- * @see \qing\session_user\UserSession
+ * @see \qing\session\User
  */
 class User extends Facade{
 	/**

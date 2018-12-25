@@ -43,8 +43,13 @@ class Hidden{
 	 */
 	public static function email($email){
 		list($name,$suffix)=explode('@',$email);
-		//#名称去第一位和最后一位
-		$name=substr($name,0,1).'***'.substr($name,-1);
+		if(strlen($name)>=3){
+			//#名称去第一位和最后一位
+			$name=substr($name,0,1).'***'.substr($name,-1);
+		}else{
+			//名称太短
+			$name='**';
+		}
 		return $name.'@'.$suffix;
 	}
 }

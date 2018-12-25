@@ -11,7 +11,7 @@ use qing\exceptions\NotfoundMethodException;
  * @copyright Copyright (c) 2013 http://qingmvc.com
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache-2.0
  */
-abstract class Facade{
+class Facade{
 	/**
 	 * 已绑定实例
 	 * - 假如名称改变
@@ -28,7 +28,9 @@ abstract class Facade{
 	 *
 	 * @return string
 	 */
-	abstract protected static function getName();
+	protected static function getName(){
+		return '';
+	}
 	/**
 	 * 从组件容器中获取对应实例
 	 *

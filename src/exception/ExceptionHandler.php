@@ -104,16 +104,20 @@ class ExceptionHandler extends Component{
 		//$debug=$this->debug && APP_DEBUG===true;
 		$debug=$this->debug;
 		//$debug=true;
-		if($debug){
-			//#debug模式
-			//#转义输出缓存
-			$this->escapeOutputBuffers();
-			DebugHandler::handle($exception);
-		}else{
+		if(!$debug){
 			//#生产模式
 			//#清除php输出缓存
 			$this->clearOutputBuffers();
 			$this->runtimeHandler($exception);
+		}else if(PHP_SAPI=='cli'){
+			//#命令行模式
+			$this->clearOutputBuffers();
+			CliHandler::handle($exception);
+		}else{
+			//#debug模式
+			//#转义输出缓存
+			$this->escapeOutputBuffers();
+			DebugHandler::handle($exception);
 		}
 	}
 	/**

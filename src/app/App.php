@@ -19,7 +19,7 @@ use qing\utils\Instance;
  * @copyright Copyright (c) 2013 http://qingmvc.com
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache-2.0
  */
-abstract class App extends Component implements AppInterface{
+class App extends Component implements AppInterface{
 	/**
 	 * 模块支持
 	 */
@@ -93,9 +93,12 @@ abstract class App extends Component implements AppInterface{
 	 */
 	public $timezone="PRC";
 	/**
-	 * 抽象方法
+	 * 执行应用
+	 * 启动应用
 	 */
-	abstract public function run();
+	public function run(){
+		
+	}
 	/**
 	 * 初始化应用环境
 	 * 初始化应用上下文

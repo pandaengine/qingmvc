@@ -12,12 +12,11 @@ use qing\com\Component;
  */
 class User extends Component{
 	/**
-	 * 数据键值前缀/user_
-	 * 默认为空，减少session数据量
-	 *
+	 * 数据键值
+	 * 
 	 * @var string
 	 */
-	public $prefix='';
+	public $sessionKey='_user_';
 	/**
 	 * session组件名称
 	 * 
@@ -66,20 +65,95 @@ class User extends Component{
 	 */
 	public $status=0;
 	/**
+	 * @return array
+	 */
+	public static function dataFields(){
+		$fields=
+		[
+			'uid'		=>'int',
+			'username'	=>'string',
+			'nickname'	=>'string',
+			'gid'		=>'int',
+			'admin'		=>'int',
+			'status'	=>'int'
+		];
+		return $fields;
+	}
+	/**
 	 * 
 	 * @see \qing\com\Component::initComponent()
 	 */
 	public function initComponent(){
 		$this->_session=com($this->sessionCom);
-		if($_SESSION){
-			//#从会话数据中恢复用户会话数据
-			$this->recoverProp('uid','int');
-			$this->recoverProp('username','string');
-			$this->recoverProp('nickname','string');
-			$this->recoverProp('gid','int');
-			$this->recoverProp('admin','int');
-			$this->recoverProp('status','int');
+		if($_SESSION && isset($_SESSION[$this->sessionKey])){
+			$this->recover();
 		}
+	}
+	/**
+	 * 恢复数据
+	 * 从会话数据中恢复用户会话数据
+	 */
+	protected function recover(){
+		$fields=self::dataFields();
+		$datas=(array)$_SESSION[$this->sessionKey];
+		foreach($datas as $k=>$v){
+			if(isset($fields[$k])){
+				$this->recoverProp($k,$v,$fields[$k]);
+			}
+		}
+	}
+	/**
+	 * 初始化属性
+	 * 从会话数据中恢复数据设置属性
+	 *
+	 * @param string $key
+	 * @param string $value
+	 * @param string $type
+	 */
+	protected function recoverProp($key,$value,$type='string'){
+		if($value!==null){
+			//不等于null才设置
+			//格式化数据
+			switch($type){
+				case 'int':$value=(int)$value;break;
+				case 'float':$value=(float)$value;break;
+				case 'bool':$value=(bool)$value;break;
+				case 'string':
+				default:$value=(string)$value;break;
+			}
+			$this->$key=$value;
+		}
+	}
+	/**
+	 * 设置属性
+	 * 并持久化数据到会话数据
+	 * 主动式更新,主动持久化
+	 *
+	 * @param  $key
+	 * @param  $value
+	 */
+	protected function setProp($key,$value){
+		//更改属性
+		$this->$key=$value;
+		$this->set($key,$value);
+	}
+	/**
+	 * 获取持久化数据
+	 *
+	 * @param string $key
+	 * @return string
+	 */
+	public function get($key){
+		return $_SESSION[$this->sessionKey][$key];
+	}
+	/**
+	 * 持久化数据
+	 *
+	 * @param string $key
+	 * @param string $value
+	 */
+	public function set($key,$value){
+		$_SESSION[$this->sessionKey][$key]=$value;
 	}
 	/**
 	 * 设置uid
@@ -142,67 +216,6 @@ class User extends Component{
 		return $this;
 	}
 	/**
-	 * @name getKey
-	 * @param string $key
-	 * @return string
-	 */
-	public function getKey($key){
-		return $this->prefix.$key;
-	}
-	/**
-	 * 获取持久化数据
-	 *
-	 * @param string $key
-	 * @return string
-	 */
-	public function get($key){
-		return $this->_session->get($this->getKey($key));
-	}
-	/**
-	 * 持久化数据
-	 *
-	 * @param string $key
-	 * @param string $value
-	 */
-	public function set($key,$value){
-		$this->_session->set($this->getKey($key),$value);
-	}
-	/**
-	 * 初始化属性
-	 * 从会话数据中恢复数据设置属性
-	 * 
-	 * @param string $key
-	 * @param string $type
-	 */
-	protected function recoverProp($key,$type='string'){
-		$value=$this->get($key);
-		if($value!==null){
-			//不等于null才设置
-			//格式化数据
-			switch($type){
-				case 'int':$value=(int)$value;break;
-				case 'float':$value=(float)$value;break;
-				case 'bool':$value=(bool)$value;break;
-				case 'string':
-				default:$value=(bool)$value;break;
-			}
-			$this->$key=$value;
-		}
-	}
-	/**
-	 * 设置属性
-	 * 并持久化数据到会话数据
-	 * 主动式更新,主动持久化
-	 *
-	 * @param  $key
-	 * @param  $value
-	 */
-	protected function setProp($key,$value){
-		//更改属性
-		$this->$key=$value;
-		$this->set($key,$value);
-	}
-	/**
 	 * 是否管理员
 	 *
 	 * @return boolean
@@ -220,7 +233,8 @@ class User extends Component{
 	}
 	/**
 	 * 验证是否已经登录
-	 *
+	 * 
+	 * @name logged in
 	 * @return boolean
 	 */
 	public function isLogged(){
@@ -272,11 +286,12 @@ class User extends Component{
 	 */
 	public function getData(){
 		$data=[];
-		$data['uid']	 =$this->uid;
-		$data['username']=$this->username;
-		$data['nickname']=$this->nickname;
-		$data['status']	 =$this->status;
-		$data['gid']	 =$this->gid;
+		$fields=self::dataFields();
+		foreach($fields as $field=>$type){
+			if(property_exists($this,$field)){
+				$data[$field]=$this->$field;
+			}
+		}
 		return $data;
 	}
 }	

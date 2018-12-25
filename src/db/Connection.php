@@ -2,6 +2,7 @@
 namespace qing\db;
 use qing\com\Component;
 use qing\facades\Event;
+use qing\facades\Coms;
 /**
  * 数据库连接
  * 抽象类，不可被实例化
@@ -126,6 +127,13 @@ abstract class Connection extends Component implements ConnectionInterface{
      * @var string
      */
     protected $_lastParams;
+    /**
+     * 初始化组件
+     *
+     * @see \qing\com\ComponentInterface::initComponent()
+     */
+    public function initComponent(){
+    }
     /**
      * 暴露给事件调用
      * 

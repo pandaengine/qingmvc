@@ -141,7 +141,7 @@ class UrlManager extends Component{
 	 *
 	 * get : index.php?m=member&c=Index&a=login
 	 * path: index.php/.member/index/login
-	 * path: index.php?r=/.member/index/login
+	 * rpath: index.php?r=/.member/index/login
 	 *
 	 * @param string $module 	模块
 	 * @param string $ctrl 		控制器

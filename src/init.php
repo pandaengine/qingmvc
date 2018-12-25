@@ -24,6 +24,8 @@ defined('MOD_FILE')	or define('MOD_FILE',0644);
 
 //设置系统安全常量，不可去除
 define('APP_QING'		,true);
+define('APP_CLI'		,PHP_SAPI=='cli');
+		
 //请求脚本目录/程序根目录/wwwroot/realpath('.')
 define('APP_SCRIPT'		,$_SERVER['SCRIPT_FILENAME']);
 define('APP_PUBLIC'		,dirname(APP_SCRIPT));

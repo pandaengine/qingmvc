@@ -1,5 +1,5 @@
 <?php
-namespace qing\tips;
+namespace qing\console;
 /**
  * @author xiaowang <736523132@qq.com>
  * @copyright Copyright (c) 2013 http://qingmvc.com

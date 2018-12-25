@@ -41,16 +41,17 @@ class SqlBuilder extends Component implements SqlBuilderInterface{
 	 */
 	protected $_parts=[];
 	/**
-	 * 初始化语法结构
+	 * @var string
 	 */
-	protected function initStructures(){
-		$this->_structures=(array)include __DIR__.'/structures/'.$this->type.'.php';
-	}
+	protected $_action;
 	/**
+	 * 初始化组件
+	 * 
 	 * @see \qing\com\ComponentInterface::initComponent()
 	 */
 	public function initComponent(){
-		$this->initStructures();
+		//初始化语法结构
+		$this->_structures=(array)include __DIR__.'/structures/'.$this->type.'.php';
 	}
 	/**
 	 */
@@ -71,6 +72,7 @@ class SqlBuilder extends Component implements SqlBuilderInterface{
 	public function buildSql($action,array $parts){
 		//#必须先重置|每次查询都使用该实例
 		$this->_bindings=[];
+		$this->_action=$action;
 		$this->_parts=$parts;
 		if(!isset($this->_structures[$action])){
 			throw new \Exception('SQL语法结构不存在:'.$action);
@@ -133,7 +135,7 @@ class SqlBuilder extends Component implements SqlBuilderInterface{
 	 */
 	protected function getValue($value,$field=null){
 		if(!$this->bindOn){
-			//#不开启预处理
+			//#不开启预处理，不转义单引号，需要前置处理
 			return "'{$value}'";
 		}else{
 			//#开启预处理
@@ -169,19 +171,33 @@ class SqlBuilder extends Component implements SqlBuilderInterface{
 	 * @param string $values
 	 */
 	protected function _values($values){
-		if(is_array($values)){
-			/*
-			$values=array_map(function($value){
-				return $this->getValue($value);
-			},$values);
-			*/
-			array_walk($values,function(&$value,$key){
-				$value=$this->getValue($value,$key);
-			});
+		if(!is_array($values)){
+			//#字符串
+			return (string)$values;
+		}else{
 			//#数组
-			$values='('.implode(',',$values).')';
+			if($this->_action=='INSERTS' || $this->_action=='REPLACES'){
+				//一次插入多行数据
+				$sqls=[];
+				foreach($values as $value){
+					$sqls[]=$this->_values_build($value);
+				}
+				return implode(',',$sqls);
+			}else{
+				//一次插入一行数据
+				return $this->_values_build($values);
+			}
 		}
-		return $values;
+	}
+	/**
+	 * @param array $value
+	 */
+	protected function _values_build(array $value){
+		$sqls=[];
+		foreach($value as $k=>$v){
+			$sqls[]=$this->getValue($v,$k);
+		}
+		return '('.implode(',',$sqls).')';
 	}
 	/**
 	 * `num`=`num`+1,'name'='xiaowang'

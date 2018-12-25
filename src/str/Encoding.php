@@ -70,5 +70,13 @@ class Encoding{
 	public static function toUtf8($value,$from='GB2312'){
 		return self::conv($value,$from,'UTF-8');
 	}
+	/**
+	 * @param string $value
+	 * @param string $from
+	 * @return string
+	 */
+	public static function toGbk($value,$from='UTF-8'){
+		return self::conv($value,$from,'GBK');
+	}
 }
 ?>

@@ -9,6 +9,7 @@
 use qing\facades\Coms;
 use qing\facades\Config;
 use qing\facades\Request;
+use qing\facades\UrlManager;
 use qing\Qing;
 use qing\config\Option;
 /**
@@ -34,7 +35,7 @@ if(!function_exists('dump')){
 	 */
 	function dump($var=''){
 		$args=func_get_args();
-		echo "<pre>";
+		if(!APP_CLI) echo "<pre>";
 		echo "\n";
 		if(count($args)==1){
 			//一个参数
@@ -44,11 +45,20 @@ if(!function_exists('dump')){
 			var_dump($args);
 		}
 		echo "\n";
-		echo "</pre>";
+		if(!APP_CLI) echo "</pre>";
 	}
 }
+/**
+ * 行内打印
+ * 
+ * @name dump inline/ln
+ * @param string $var
+ * @param string $br
+ */
+function dump_ln($var,$br=false){
+	var_dump($var);echo "\n";if($br && PHP_SAPI!='cli'){ echo "<br/>"; }
+}
 //组件
-
 /**
  * 返回应用实例
  *
@@ -150,22 +160,30 @@ function option($opt,$key=''){
 }
 /**
  * 生成url
- * 模版编译即执行{C:U()}
+ * __M__ __C__ __A__
  *
+ * @see \qing\url\U
  * @param string $ctrl
  * @param string $action
  * @param array $params
  * @return string
  */
 function U($ctrl,$action='',array $params=[]){
-	return \qing\url\U::url('',$ctrl,$action,$params);
+	//自动使用当前模块
+	if(MODULE_NAME==MAIN_MODULE){
+		//主模块
+		$module='';
+	}else{
+		$module=MODULE_NAME;
+	}
+	if(!$ctrl){
+		//#空则自动获取
+		$ctrl=CTRL_NAME;
+	}
+	return UrlManager::create($module,$ctrl,$action,$params);
 }
 /**
  * url创建器
- * 创建url|控制器和操作不填写则自动获取
- *
- * - 模块为null时|剔除模块也不自动获取模块
- * - 模块为空不为null|自动
  *
  * @see \qing\url\U
  * @param string $module
@@ -175,7 +193,7 @@ function U($ctrl,$action='',array $params=[]){
  * @return string
  */
 function url($module,$ctrl='',$action='',array $params=[]){
-	return \qing\url\U::url($module,$ctrl,$action,$params);
+	return UrlManager::create($module,$ctrl,$action,$params);
 }
 /**
  *

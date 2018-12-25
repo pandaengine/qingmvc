@@ -286,7 +286,7 @@ class BaseModel extends Component{
 	 * @param integer $expire 有效时间（秒）|失效时间|0:则不限制过期时间
 	 */
 	public function cache($id,$callback,$expire=0){
-		$cache=CacheX::cache($this->cacheName);
+		$cache=CacheX::conn($this->cacheName);
 		//从缓存中获取
 		$content=$cache->get($id);
 		if(!$content){
